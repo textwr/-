@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 폼</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(() => {
+        $("input[type='submit']").css({
+          "background-color": "#007BFF",
+          color: "#FFF",
+          border: "none",
+          padding: "10px 20px",
+          "border-radius": "5px",
+          cursor: "pointer",
+        });
+        $("#registerForm").submit(function (e) {
+          e.preventDefault();
+          let check = true;
+          $(".caution").remove();
+          const name = $("#registerForm")[0][0].value;
+          const email = $("#registerForm")[0][1].value;
+          const password = $("#registerForm")[0][2].value;
+          const checkPassword = $("#registerForm")[0][3].value;
+          const isMale = $("#registerForm")[0][4].checked;
+          const isFemale = $("#registerForm")[0][5].checked;
+          const confirm = $("#registerForm")[0][6].checked;
+          if (name === "") {
+            $("#name").after("<div class='caution'>이름을 입력해주세요</div>");
+            check = false;
+          }
+          if (email === "") {
+            $("#email").after(
+              "<div class='caution'>이메일을 입력해주세요</div>"
+            );
+            check = false;
+          }
+          if (password === "") {
+            $("#password").after(
+              "<div class='caution'>패스워드를 입력해주세요</div>"
+            );
+            check = false;
+          }
+          if (checkPassword === "") {
+            $("#checkPassword").after(
+              "<div class='caution'>패스워드를 입력해주세요</div>"
+            );
+            check = false;
+          }
+          if (checkPassword != password) {
+            $("#checkPassword").after(
+              "<div class='caution'>패스워드가 일치하지 않습니다</div>"
+            );
+            check = false;
+          }
+          if (isMale === false && isFemale === false) {
+            $("label[for='female']").after(
+              "<div class='caution'>성별을 체크해주세요</div>"
+            );
+            check = false;
+          }
+          if (confirm != true) {
+            $("label[for='confirm']").after(
+              "<div class='caution'>약관을 확인해주세요</div>"
+            );
+            check = false;
+          }
+          if (check === true) {
+            $("#informationConfirm").html(`
+            <p> 사용자 정보 : ${name} </p>
+            <p> 이메일 : ${email} </p>
+            <p> 패스워드 : ${password} </p>
+            <p> 성별 : ${isMale ? "남자" : "여자"} </p>`);
+          }
+        });
+        $("a").mouseover(function (e) {
+          $("a").after("<div class='alert'>약관</div>");
+        });
+        $("a").mouseout(function (e) {
+          $(".alert").remove();
+        });
+      });
+    </script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+      }
+      .signup-form {
+        width: 100%;
+        max-width: 500px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+      .signup-form div {
+        margin-bottom: 15px;
+      }
+      .signup-form p {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      .signup-form input[type="text"],
+      .signup-form input[type="email"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .signup-form input[type="radio"],
+      .signup-form input[type="checkbox"] {
+        margin-right: 10px;
+      }
+      .signup-form label {
+        margin-left: 5px;
+      }
+      .caution {
+        color: red;
+        font-size: small;
+      }
+      .alert {
+        background-color: gray;
+        color: #fff;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-form">
+      <h2>회원가입</h2>
+      <form id="registerForm" method="post">
+        <div>
+          <p for="name">사용자 이름</p>
+          <input type="text" id="name" name="name" />
+        </div>
+        <div>
+          <p for="email">이메일</p>
+          <input type="text" id="email" name="email" />
+        </div>
+        <div>
+          <p for="password">비밀번호</p>
+          <input type="text" id="password" name="password" />
+        </div>
+        <div>
+          <p for="checkPassword">비밀번호 확인</p>
+          <input type="text" id="checkPassword" name="checkPassword" />
+        </div>
+        <div>
+          <input type="radio" id="male" name="sex" value="male" />
+          <label for="male">남자</label>
+          <input type="radio" id="female" name="sex" value="female" />
+          <label for="female">여자</label>
+        </div>
+        <div>
+          <p><a href="#">약관 확인</a></p>
+          <input type="checkbox" id="confirm" name="confirm" />
+          <label for="confirm">약관에 동의합니다</label>
+        </div>
+        <input type="submit" value="제출하기" />
+      </form>
+      <h3>회원가입 정보 확인</h3>
+      <div id="informationConfirm">.</div>
+    </div>
+  </body>
+</html>
